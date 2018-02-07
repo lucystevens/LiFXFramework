@@ -1,0 +1,23 @@
+#option-node {
+    -fx-background-radius: 0;
+    -fx-font-size: 14px;
+    -fx-padding: 15 30 15 30;
+    -fx-spacing: 0;
+}
+
+#option-pane {
+	-fx-padding: 10 0 0 0;
+	-fx-alignment:top-center;
+	-fx-spacing: 0;
+}
+
+#list-view {
+	-fx-effect: dropshadow(three-pass-box, #404040, 10, 0, 0, 0);
+	-fx-background-radius: 6;
+}
+
+#icon {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 24px;
+    -fx-effect: dropshadow(three-pass-box, #404040, 10, 0, 0, 2);
+}

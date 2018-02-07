@@ -1,0 +1,9 @@
+#preview-box{
+  	-fx-background-color: #ffffff; 
+}
+
+#preview-box:hover{
+	-fx-effect: dropshadow(three-pass-box, #000000, 10, 0, 0, 0); 
+  	-fx-background-insets: 2; 
+  	-fx-background-radius: 6;
+}
