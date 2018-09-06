@@ -1,7 +1,5 @@
 package fx.framework.launcher;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +37,6 @@ public class FXApplication extends StackPane {
 	
 	private ChangeListener<? super Number> screenWidthListener;
 	private Stage stage;
-	private String uriPrefix = "";
 	
 	/*
 	 * Constructs a new FXApplication using the given stage.
@@ -53,7 +50,6 @@ public class FXApplication extends StackPane {
 		super(new BorderPane());
 		StyleBuilder.styleNode(this).bindProperty(CSSProperty.BACKGROUND_COLOUR, THEME.getSecondaryBackgroundColour()).build();
 		this.stage = stage;
-		if(isJar()) uriPrefix = "/resources";
 		loadFonts();
 		Scene scene = new Scene(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 		loadStylesheets(scene);
@@ -73,7 +69,7 @@ public class FXApplication extends StackPane {
 	 */
 	private FXApplication(Stage stage, String title, String icon){
 		this(stage, title);
-		Image iconImg = new Image(this.getClass().getResourceAsStream(uriPrefix + icon));
+		Image iconImg = new Image(this.getClass().getResourceAsStream(icon));
 		stage.getIcons().add(iconImg);
 	}
 	
@@ -110,7 +106,7 @@ public class FXApplication extends StackPane {
 	 */
 	private void loadFonts(){
 		for(TypeFace font : TypeFace.values()){
-			if(font.needsLoading()) Font.loadFont(FXApplication.class.getResource(uriPrefix + font.filename()).toExternalForm(), 24);
+			if(font.needsLoading()) Font.loadFont(FXApplication.class.getResource(font.filename()).toExternalForm(), 24);
 		}
 	}
 	
@@ -119,22 +115,7 @@ public class FXApplication extends StackPane {
 	 */
 	private void loadStylesheets(Scene scene){
 		List<String> stylesheets = Arrays.asList("lifx-components.css", "previews.css", "jfx-components.css");
-		stylesheets.forEach(s -> scene.getStylesheets().add(uriPrefix + "/css/" + s));
-	}
-	
-	/*
-	 * Gets the classpath of this class, then checks the scheme to determine
-	 * whether the application si wrapped in a jar or not.
-	 */
-	private boolean isJar(){
-		boolean jar = false;
-		try {
-			URI classpath = this.getClass().getResource("FXApplication.class").toURI();
-			jar = classpath.getScheme().equals("jar");
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return jar;
+		stylesheets.forEach(s -> scene.getStylesheets().add("/css/" + s));
 	}
 	
 	/**
